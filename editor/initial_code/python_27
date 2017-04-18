@@ -1,0 +1,111 @@
+def unfair_districts(size_of_district, grid):
+
+    return []
+
+if __name__ == '__main__':
+
+    def checker(solution, area_of_district, grid, win_flg=True):
+
+        w, h = len(grid[0]), len(grid)
+        size = w * h
+        cell_dic = {}
+
+        # make cell_dic
+        def adj_cells(cell):
+            result = []
+            if cell % w != 1 and cell - 1 > 0:
+                result.append(cell - 1)
+            if cell % w and cell + 1 <= size:
+                result.append(cell + 1)
+            if (cell - 1) // w:
+                result.append(cell - w)
+            if (cell - 1) // w < h - 1:
+                result.append(cell + w)
+            return set(result)
+
+        for i, v in enumerate(chain(*grid)):
+            cell_dic[i + 1] = {'vote': v, 'adj': adj_cells(i + 1)}
+
+        answer = solution(area_of_district, grid)
+        if answer == [] and not win_flg:
+            return True
+
+        # answer check
+        def district_check(d):
+            all_cells = set(d[1:])
+            next_cells = cell_dic[d[0]]['adj']
+            for _ in range(area_of_district-1):
+                all_cells -= next_cells
+                next_cells = set(chain(*[list(cell_dic[nc]['adj']) for nc in next_cells])) & set(d)
+            return not all_cells
+
+        if not isinstance(answer, list):
+            print('wrong data type :', answer)
+            return False
+        else:
+            for an in answer:
+                if not isinstance(an, list):
+                    print('wrong data type:', an)
+                    return False
+                elif not an or not all(isinstance(a, int) for a in an):
+                    print('wrong data type', an)
+                    return False
+                elif not district_check(an):
+                    print('wrong district: ', an)
+                    return False
+            if set(range(1, size+1)) ^ set(chain(*answer)):
+                print('not exists all cells', answer)
+                return False
+
+        # win check
+        win, lose = 0, 0
+        for part in answer:
+            vote_a, vote_b = 0, 0
+            for p in part:
+                a, b = cell_dic[p]['vote']
+                vote_a += a
+                vote_b += b
+            win += vote_a > vote_b
+            lose += vote_a < vote_b
+
+        return win > lose
+
+    assert checker(unfair_districts, 2, [
+        [[2, 1], [1, 1], [1, 2]],
+        [[2, 1], [1, 1], [1, 2]]]), '3x2grid'
+
+    assert checker(unfair_districts, 3, [
+        [[2, 1], [2, 1], [2, 1]],
+        [[2, 1], [1, 1], [1, 2]],
+        [[1, 1], [1, 2], [1, 2]]]), '3x3gid'
+
+    assert checker(unfair_districts, 3, [
+        [[2, 1], [1, 1], [1, 2]],
+        [[1, 2], [1, 1], [2, 1]],
+        [[2, 1], [1, 1], [1, 2]]], False), '3x3gid(no answer)'
+
+    assert checker(unfair_districts, 4, [
+        [[2, 1], [2, 1], [1, 1]],
+        [[2, 1], [2, 1], [1, 1]],
+        [[1, 1], [1, 2], [1, 2]],
+        [[1, 1], [1, 2], [1, 2]]]), '3x4grid'
+
+    assert checker(unfair_districts, 2, [
+        [[2, 1], [1, 1], [2, 1], [1, 2], [1, 1], [1, 2]],
+        [[2, 1], [1, 1], [2, 1], [1, 2], [1, 1], [1, 2]]]), '6x2grid'
+
+    assert checker(unfair_districts, 4, [
+        [[2, 1], [2, 1], [1, 1], [1, 1]],
+        [[2, 1], [2, 1], [1, 1], [1, 1]],
+        [[1, 1], [1, 1], [1, 2], [1, 2]],
+        [[1, 1], [1, 1], [1, 2], [1, 2]]]), '4x4grid'
+
+    assert checker(unfair_districts, 5, [
+        [[2, 1], [2, 1], [2, 1], [2, 1], [1, 1]],
+        [[2, 1], [2, 1], [2, 1], [2, 1], [1, 1]],
+        [[1, 1], [1, 1], [1, 1], [1, 1], [1, 1]],
+        [[1, 1], [1, 2], [1, 2], [1, 2], [1, 2]],
+        [[1, 1], [1, 2], [1, 2], [1, 2], [1, 2]]]), '5x5grid'
+
+    print('check done')
+

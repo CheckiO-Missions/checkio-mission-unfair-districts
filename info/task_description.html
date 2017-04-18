@@ -1,0 +1,37 @@
+<p>
+you should have X amount of districts, size of those districts should be equal
+So we have a grid of units. Every unit A-people voted for your candidate and B-people voted for another candidate.
+Your mission is to unite all of those units in X amount of districts so your candidate would have more districts voted for him.
+</p>
+
+<p>
+    <strong>Input: </strong> Two arguments. Size of each district (as integer) , grid of all electoral zone (as list of list (each unit has [A-peoples, B-peoples]))
+</p>
+
+<p>
+    <strong>Output: </strong> united districts (as List of list of integer). we use row major numbering (begin with 1) for grid of units. if no answer, return empty list([]).
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Example:</strong>
+    </p>
+<pre class="brush: python">
+unfair_districts(2, [[[2, 1], [1, 1], [1, 2]],
+                     [[2, 1], [1, 1], [1, 2]]]) == [[1, 2], [3, 6], [4, 5]]
+
+
+unfair_districts(4, [[[2, 1], [2, 1], [1, 1], [1, 1]],
+                     [[2, 1], [2, 1], [1, 1], [1, 1]],
+                     [[1, 1], [1, 1], [1, 2], [1, 2]],
+                     [[1, 1], [1, 1], [1, 2], [1, 2]]]) == [[1, 5, 9, 13], [2, 3, 4, 8], [6, 7, 10, 11], [12, 14, 15, 16]] 
+
+</pre>
+<p>
+<strong>Precondition:</strong><br>
+    2 &le; grid_rows, grid_columns &le; 6<br>
+    6 &le; grid_rows * grid_columns &le; 25<br>
+    2 &le; size_of_each_district<br>
+    0 &le; each_votes &le; 9<br>
+</p>
+</div>
