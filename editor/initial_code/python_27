@@ -3,6 +3,7 @@ def unfair_districts(size_of_district, grid):
     return []
 
 if __name__ == '__main__':
+    from itertools import chain
 
     def checker(solution, area_of_district, grid, win_flg=True):
 
