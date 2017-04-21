@@ -111,4 +111,14 @@ TESTS = {
             ],
         },
     ],
+    "Extra": [
+        {
+            "input": [5, [
+            ],
+            "answer": [],
+            "explanation": [
+                '5x5 no answer',
+            ],
+        },
+    ],
 }
