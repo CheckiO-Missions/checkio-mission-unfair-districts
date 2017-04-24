@@ -78,6 +78,8 @@ def checker(input, user_result):
         for an in answer:
             if not isinstance(an, list):
                 return False, (user_result, 'wrong data type')
+            elif len(an) != area_of_district:
+                return False, (user_result, 'wrong data length')
             elif not an or not all(isinstance(a, int) for a in an):
                 return False, (user_result, 'wrong data type')
             elif not district_check(an):

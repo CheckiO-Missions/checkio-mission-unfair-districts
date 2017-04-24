@@ -1,5 +1,5 @@
 <p>
-you should have X amount of districts, size of those districts should be equal
+You should have X amount of districts, size of those districts should be equal
 So we have a grid of units. Every unit A-people voted for your candidate and B-people voted for another candidate.
 Your mission is to unite all of those units in X amount of districts so your candidate would have more districts voted for him.
 </p>
@@ -9,7 +9,7 @@ Your mission is to unite all of those units in X amount of districts so your can
 </p>
 
 <p>
-    <strong>Output: </strong> united districts (as List of list of integer). we use row major numbering (begin with 1) for grid of units. if no answer, return empty list([]).
+    <strong>Output: </strong> united districts (as List of list of integer). we use row major numbering (begin with 1) for grid of units. If your candidate can not win more, return empty list([]).
 </p>
 
 <div class="for_info_only">
@@ -29,9 +29,11 @@ unfair_districts(4, [[[2, 1], [2, 1], [1, 1], [1, 1]],
 </pre>
 <p>
 <strong>Precondition:</strong><br>
-    2 &le; grid_rows, grid_columns &le; 6<br>
-    6 &le; grid_rows * grid_columns &le; 25<br>
-    2 &le; size_of_each_district<br>
-    0 &le; each_votes &le; 9<br>
 </p>
+<ul>
+    <li> 2 &le; grid_rows, grid_columns &le; 6</li>
+    <li>6 &le; grid_rows * grid_columns &le; 25</li>
+    <li>2 &le; size_of_each_district</li>
+    <li>0 &le; each_votes &le; 9</li>
+</ul>
 </div>

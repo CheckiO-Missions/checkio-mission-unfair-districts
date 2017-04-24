@@ -48,6 +48,9 @@ if __name__ == '__main__':
                 if not isinstance(an, list):
                     print('wrong data type:', an)
                     return False
+                elif len(an) != area_of_district:
+                    print('wrong data length', an)
+                    return False                    
                 elif not an or not all(isinstance(a, int) for a in an):
                     print('wrong data type', an)
                     return False

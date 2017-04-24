@@ -155,15 +155,15 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
             });
 
             setTimeout(function () {
-                an_lines.animate(attr.rect2, 800 );
-                cell_win.animate({'fill': color.orange}, 800);
-                cell_lose.animate({'fill': color.blue}, 800);
+                an_lines.animate(attr.rect2, 600 );
+                cell_win.animate({'fill': color.orange}, 600);
+                cell_lose.animate({'fill': color.blue}, 600);
 
-            }, 500);
+            }, 400);
             
             // win lose draw
             win_lose_draw = paper.text(fullSizeX / 2, fullSizeY - 10,
-                '{Win: '+win+', Lose: '+lose+', Draw: '+draw+'}'
+                '{Wins: '+win+', Losses: '+lose+', Draws: '+draw+'}'
             ).attr(attr.text);
         }
 
@@ -175,7 +175,6 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
                 python: 'unfair_districts'
             },
             animation: function($expl, data){
-                console.log('data:', data);
                 unfairDistrictsCanvas(
                     $expl[0],
                     data.in,
