@@ -3,7 +3,9 @@ def unfair_districts(size_of_district, grid):
     return []
 
 if __name__ == '__main__':
+
     from itertools import chain
+    from collections import defaultdict
 
     def checker(solution, area_of_district, grid, win_flg=True):
 
@@ -28,8 +30,27 @@ if __name__ == '__main__':
             cell_dic[i + 1] = {'vote': v, 'adj': adj_cells(i + 1)}
 
         answer = solution(area_of_district, grid)
+
         if answer == [] and not win_flg:
             return True
+
+        if not isinstance(answer, list):
+            print('wrong data type :', answer)
+            return False
+        else:
+            if len(answer) != h:
+                print('wrong data length', answer)
+                return False
+            for an in answer:
+                if len(an) != w:
+                    print('wrong data length', an)
+                    return False
+
+        ds_dic = defaultdict(list)
+        for i, r in enumerate(''.join(answer), start=1):
+            ds_dic[r].append(i)
+
+        answer_nums = [v for v in ds_dic.values()]
 
         # answer check
         def district_check(d):
@@ -40,30 +61,21 @@ if __name__ == '__main__':
                 next_cells = set(chain(*[list(cell_dic[nc]['adj']) for nc in next_cells])) & set(d)
             return not all_cells
 
-        if not isinstance(answer, list):
-            print('wrong data type :', answer)
-            return False
-        else:
-            for an in answer:
-                if not isinstance(an, list):
-                    print('wrong data type:', an)
-                    return False
-                elif len(an) != area_of_district:
-                    print('wrong data length', an)
-                    return False                    
-                elif not an or not all(isinstance(a, int) for a in an):
-                    print('wrong data type', an)
-                    return False
-                elif not district_check(an):
-                    print('wrong district: ', an)
-                    return False
-            if set(range(1, size+1)) ^ set(chain(*answer)):
-                print('not exists all cells', answer)
+        for an in answer_nums:
+            if len(an) != area_of_district:
+                print('wrong data length:', an)
                 return False
+            if not district_check(an):
+                print('wrong district: ', an)
+                return False
+
+        if set(range(1, size+1)) ^ set(chain(*answer_nums)):
+            print('not exists all cells', answer_nums)
+            return False
 
         # win check
         win, lose = 0, 0
-        for part in answer:
+        for part in answer_nums:
             vote_a, vote_b = 0, 0
             for p in part:
                 a, b = cell_dic[p]['vote']

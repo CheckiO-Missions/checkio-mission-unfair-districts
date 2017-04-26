@@ -98,7 +98,24 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
             var cell_lose = paper.set();
             var [win, lose, draw] = [0, 0, 0]; 
 
-            user_result.forEach(district=>{
+            // translate user_result 
+            var ds_dic = {};
+            const urj = user_result.join('');
+            for (var i=1; i <= urj.length; i += 1) {
+                const a = urj[i-1];
+                if (ds_dic[a]) {
+                    ds_dic[a].push(i);
+                } else {
+                    ds_dic[a] = [i];
+                }
+            } 
+
+            var user_result_nums = [];
+            for (var k in ds_dic) {
+                user_result_nums.push(ds_dic[k]);
+            }
+
+            user_result_nums.forEach(district=>{
                 var [vote_A, vote_B] = [0, 0]; 
 
                 district.forEach(n=>{

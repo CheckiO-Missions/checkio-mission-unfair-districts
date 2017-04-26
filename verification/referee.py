@@ -30,9 +30,10 @@ from checkio.signals import ON_CONNECT
 from checkio import api
 from checkio.referees.io import CheckiOReferee
 from checkio.referees import cover_codes
-from itertools import chain
-
 from tests import TESTS
+
+from itertools import chain
+from collections import defaultdict
 
 def checker(input, user_result):
 
@@ -62,6 +63,15 @@ def checker(input, user_result):
 
     answer = user_result
 
+    if not isinstance(answer, list):
+        return False, (user_result, 'wrong data type')
+    else:
+        if len(answer) != h:
+            return False, (user_result, 'wrong data length')
+        for an in answer:
+            if len(an) != w:
+                return False, (user_result, 'wrong data length')
+
     # answer check
     def district_check(d):
         all_cells = set(d[1:])
@@ -72,24 +82,27 @@ def checker(input, user_result):
                 for nc in next_cells])) & set(d)
         return not all_cells
 
-    if not isinstance(answer, list):
+    dic2 = defaultdict(list)
+    for i, r in enumerate(''.join(answer), start=1):
+        dic2[r].append(i)
+
+    answer_nums = [v for v in dic2.values()]
+
+    if not isinstance(answer_nums, list):
         return False, (user_result, 'wrong data type')
     else:
-        for an in answer:
-            if not isinstance(an, list):
-                return False, (user_result, 'wrong data type')
-            elif len(an) != area_of_district:
+        for an in answer_nums:
+            if len(an) != area_of_district:
                 return False, (user_result, 'wrong data length')
-            elif not an or not all(isinstance(a, int) for a in an):
-                return False, (user_result, 'wrong data type')
             elif not district_check(an):
                 return False, (user_result, 'wrong district')
-        if set(range(1, size+1)) ^ set(chain(*answer)):
+
+        if set(range(1, size+1)) ^ set(chain(*answer_nums)):
             return False, (user_result, 'not exists all cells')
 
     # win check
     win, lose = 0, 0
-    for part in answer:
+    for part in answer_nums:
         vote_a, vote_b = 0, 0
         for p in part:
             a, b = cell_dic[p]['vote']
