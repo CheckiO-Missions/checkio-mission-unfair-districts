@@ -61,8 +61,10 @@ if __name__ == '__main__':
                 next_cells = set(chain(*[list(cell_dic[nc]['adj']) for nc in next_cells])) & set(d)
             return not all_cells
 
+        lined_grid = sum(grid, [])
         for an in answer_nums:
-            if len(an) != area_of_district:
+            len_dist = sum(sum(map(lambda a: lined_grid[a - 1], an), []))
+            if len_dist != area_of_district:
                 print('wrong data length:', an)
                 return False
             if not district_check(an):
@@ -86,42 +88,20 @@ if __name__ == '__main__':
 
         return win > lose
 
-    assert checker(unfair_districts, 2, [
-        [[2, 1], [1, 1], [1, 2]],
-        [[2, 1], [1, 1], [1, 2]]]), '3x2grid'
-
-    assert checker(unfair_districts, 3, [
-        [[2, 1], [2, 1], [2, 1]],
-        [[2, 1], [1, 1], [1, 2]],
-        [[1, 1], [1, 2], [1, 2]]]), '3x3gid'
-
-    assert checker(unfair_districts, 3, [
-        [[2, 1], [1, 1], [1, 2]],
-        [[1, 2], [1, 1], [2, 1]],
-        [[2, 1], [1, 1], [1, 2]]], False), '3x3gid(no answer)'
-
-    assert checker(unfair_districts, 4, [
-        [[2, 1], [2, 1], [1, 1]],
-        [[2, 1], [2, 1], [1, 1]],
-        [[1, 1], [1, 2], [1, 2]],
-        [[1, 1], [1, 2], [1, 2]]]), '3x4grid'
-
-    assert checker(unfair_districts, 2, [
-        [[2, 1], [1, 1], [2, 1], [1, 2], [1, 1], [1, 2]],
-        [[2, 1], [1, 1], [2, 1], [1, 2], [1, 1], [1, 2]]]), '6x2grid'
-
-    assert checker(unfair_districts, 4, [
-        [[2, 1], [2, 1], [1, 1], [1, 1]],
-        [[2, 1], [2, 1], [1, 1], [1, 1]],
-        [[1, 1], [1, 1], [1, 2], [1, 2]],
-        [[1, 1], [1, 1], [1, 2], [1, 2]]]), '4x4grid'
-
     assert checker(unfair_districts, 5, [
-        [[2, 1], [2, 1], [2, 1], [2, 1], [1, 1]],
-        [[2, 1], [2, 1], [2, 1], [2, 1], [1, 1]],
-        [[1, 1], [1, 1], [1, 1], [1, 1], [1, 1]],
-        [[1, 1], [1, 2], [1, 2], [1, 2], [1, 2]],
-        [[1, 1], [1, 2], [1, 2], [1, 2], [1, 2]]]), '5x5grid'
+        [[2, 1], [1, 1], [1, 2]],
+        [[2, 1], [1, 1], [0, 2]]]), '3x2grid'
+
+    assert checker(unfair_districts, 9, [
+        [[0, 3], [3, 3], [1, 1]],
+        [[1, 2], [1, 0], [1, 1]],
+        [[0, 3], [2, 1], [2, 2]]]), '3x3gid'
+
+    assert checker(unfair_districts, 8, [
+        [[1, 1], [2, 0], [2, 0], [3, 3]],
+        [[1, 1], [1, 2], [1, 1], [0, 3]],
+        [[1, 1], [1, 1], [1, 2], [0, 3]],
+        [[1, 1], [1, 1], [1, 1], [2, 0]]]), '4x4gid'
 
     print('check done')
 
