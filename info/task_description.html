@@ -17,18 +17,16 @@ Your mission is to unite all of those units in X amount of districts so your can
         <strong>Example:</strong>
     </p>
 <pre class="brush: python">
-unfair_districts(2, [[[2, 1], [1, 1], [1, 2]],
-                     [[2, 1], [1, 1], [1, 2]]]) == ['AAC',
+unfair_districts(5, [[[2, 1], [1, 1], [1, 2]],
+                     [[2, 1], [1, 1], [0, 2]]]) == ['AAC',
                                                     'BBC]
 
 
-unfair_districts(4, [[[2, 1], [2, 1], [1, 1], [1, 1]],
-                     [[2, 1], [2, 1], [1, 1], [1, 1]],
-                     [[1, 1], [1, 1], [1, 2], [1, 2]],
-                     [[1, 1], [1, 1], [1, 2], [1, 2]]]) == ['ACCC',
-                                                            'ABBC',
-                                                            'ABDD',
-                                                            'ABDD'] 
+unfair_districts(9, [[[0, 3], [3, 3], [1, 1]],
+                     [[1, 2], [1, 0], [1, 1]],
+                     [[0, 3], [2, 1], [2, 2]]]) == ['ABB',
+                                                    'ABC',
+                                                    'ACC'] 
 
 </pre>
 <p>
