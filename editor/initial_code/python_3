@@ -61,8 +61,10 @@ if __name__ == '__main__':
                 next_cells = set(chain(*[list(cell_dic[nc]['adj']) for nc in next_cells])) & set(d)
             return not all_cells
 
+        lined_grid = sum(grid, [])
         for an in answer_nums:
-            if len(an) != area_of_district:
+            len_dist = sum(sum(map(lambda a: lined_grid[a - 1], an), []))
+            if len_dist != area_of_district:
                 print('wrong data length:', an)
                 return False
             if not district_check(an):

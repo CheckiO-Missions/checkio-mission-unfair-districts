@@ -91,8 +91,10 @@ def checker(input, user_result):
     if not isinstance(answer_nums, list):
         return False, (user_result, 'wrong data type')
     else:
+        lined_grid = sum(grid, [])
         for an in answer_nums:
-            if len(an) != area_of_district:
+            len_dist = sum(sum(map(lambda a: lined_grid[a - 1], an), []))
+            if len_dist != area_of_district:
                 return False, (user_result, 'wrong data length')
             elif not district_check(an):
                 return False, (user_result, 'wrong district')
