@@ -1,5 +1,5 @@
 <p>
-You should have X amount of districts, size of those districts should be equal
+You should have X amount of districts, amount of people for those districts should be equal
 So we have a grid of units. Every unit A-people voted for your candidate and B-people voted for another candidate.
 Your mission is to unite all of those units in X amount of districts so your candidate would have more districts voted for him.
 </p>
@@ -33,10 +33,12 @@ unfair_districts(9, [[[0, 3], [3, 3], [1, 1]],
 <strong>Precondition:</strong><br>
 </p>
 <ul>
-    <li> 2 &le; grid_rows &le; 6</li>
-    <li> 2 &le; grid_columns &le; 6</li>
-    <li>6 &le; grid_rows * grid_columns &le; 25</li>
-    <li>2 &le; size_of_each_district</li>
+    <li> 2 &le; grid_rows, grid_columns &le; 6</li>
+    <li>4 &le; grid_rows * grid_columns &le; 25</li>
+    <li>Total_population % amuout_of_people == 0</li>
+    <ul>
+        <li>Total_population == sum(sum(unit) for unit in chain(*grid))</li>
+    </ul>
     <li>0 &le; each_votes &le; 9</li>
 </ul>
 </div>

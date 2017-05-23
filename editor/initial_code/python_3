@@ -1,4 +1,4 @@
-def unfair_districts(size_of_district, grid):
+def unfair_districts(amount_of_people, grid):
 
     return []
 
@@ -7,7 +7,7 @@ if __name__ == '__main__':
     from itertools import chain
     from collections import defaultdict
 
-    def checker(solution, area_of_district, grid, win_flg=True):
+    def checker(solution, amount_of_people, grid, win_flg=True):
 
         w, h = len(grid[0]), len(grid)
         size = w * h
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         for i, v in enumerate(chain(*grid)):
             cell_dic[i + 1] = {'vote': v, 'adj': adj_cells(i + 1)}
 
-        answer = solution(area_of_district, grid)
+        answer = solution(amount_of_people, grid)
 
         if answer == [] and not win_flg:
             return True
@@ -50,34 +50,27 @@ if __name__ == '__main__':
         for i, r in enumerate(''.join(answer), start=1):
             ds_dic[r].append(i)
 
-        answer_nums = [v for v in ds_dic.values()]
-
         # answer check
         def district_check(d):
             all_cells = set(d[1:])
-            next_cells = cell_dic[d[0]]['adj']
-            for _ in range(area_of_district-1):
+            next_cells = cell_dic[d[0]]['adj'] & set(d)
+            for _ in range(len(d)):
                 all_cells -= next_cells
                 next_cells = set(chain(*[list(cell_dic[nc]['adj']) for nc in next_cells])) & set(d)
             return not all_cells
 
-        lined_grid = sum(grid, [])
-        for an in answer_nums:
-            len_dist = sum(sum(map(lambda a: lined_grid[a - 1], an), []))
-            if len_dist != area_of_district:
-                print('wrong data length:', an)
+        for ch, cells in ds_dic.items():
+            dist_people = sum(sum(cell_dic[c]['vote']) for c in cells)
+            if not district_check(cells):
+                print('wrong district: ', ch)
                 return False
-            if not district_check(an):
-                print('wrong district: ', an)
+            if dist_people != amount_of_people:
+                print('wrong people:', ch)
                 return False
-
-        if set(range(1, size+1)) ^ set(chain(*answer_nums)):
-            print('not exists all cells', answer_nums)
-            return False
 
         # win check
         win, lose = 0, 0
-        for part in answer_nums:
+        for part in ds_dic.values():
             vote_a, vote_b = 0, 0
             for p in part:
                 a, b = cell_dic[p]['vote']
