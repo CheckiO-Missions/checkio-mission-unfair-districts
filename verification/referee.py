@@ -40,7 +40,7 @@ def checker(input, user_result):
     if not input and not user_result:
         return True, (user_result, '')
 
-    area_of_district, grid = input[0], input[1]
+    amount_of_people, grid = input[0], input[1]
     w, h = len(grid[0]), len(grid)
     size = w * h
     cell_dic = {}
@@ -61,50 +61,39 @@ def checker(input, user_result):
     for i, v in enumerate(chain(*grid)):
         cell_dic[i + 1] = {'vote': v, 'adj': adj_cells(i + 1)}
 
-    answer = user_result
-
-    if not isinstance(answer, list):
+    if not isinstance(user_result, list):
         return False, (user_result, 'wrong data type')
     else:
-        if len(answer) != h:
+        if len(user_result) != h:
             return False, (user_result, 'wrong data length')
-        for an in answer:
+        for an in user_result:
             if len(an) != w:
                 return False, (user_result, 'wrong data length')
+
+    ds_dic = defaultdict(list)
+    for i, r in enumerate(''.join(user_result), start=1):
+        ds_dic[r].append(i)
 
     # answer check
     def district_check(d):
         all_cells = set(d[1:])
-        next_cells = cell_dic[d[0]]['adj']
-        for _ in range(area_of_district - 1):
+        next_cells = cell_dic[d[0]]['adj'] & set(d)
+        for _ in range(len(d)):
             all_cells -= next_cells
             next_cells = set(chain(*[list(cell_dic[nc]['adj'])
-                for nc in next_cells])) & set(d)
+                            for nc in next_cells])) & set(d)
         return not all_cells
 
-    dic2 = defaultdict(list)
-    for i, r in enumerate(''.join(answer), start=1):
-        dic2[r].append(i)
-
-    answer_nums = [v for v in dic2.values()]
-
-    if not isinstance(answer_nums, list):
-        return False, (user_result, 'wrong data type')
-    else:
-        lined_grid = sum(grid, [])
-        for an in answer_nums:
-            len_dist = sum(sum(map(lambda a: lined_grid[a - 1], an), []))
-            if len_dist != area_of_district:
-                return False, (user_result, 'wrong data length')
-            elif not district_check(an):
-                return False, (user_result, 'wrong district')
-
-        if set(range(1, size+1)) ^ set(chain(*answer_nums)):
-            return False, (user_result, 'not exists all cells')
+    for ch, cells in ds_dic.items():
+        dist_people = sum(sum(cell_dic[c]['vote']) for c in cells)
+        if not district_check(cells):
+            return False, (user_result, 'wrong district')
+        if dist_people != amount_of_people:
+            return False, (user_result, 'wrong people')
 
     # win check
     win, lose = 0, 0
-    for part in answer_nums:
+    for part in ds_dic.values():
         vote_a, vote_b = 0, 0
         for p in part:
             a, b = cell_dic[p]['vote']
@@ -114,6 +103,7 @@ def checker(input, user_result):
         lose += vote_a < vote_b
 
     return win > lose, (user_result, '')
+
 
 api.add_listener(
     ON_CONNECT,
