@@ -1,8 +1,17 @@
-<p>
-You should have X amount of districts, amount of people for those districts should be equal
-So we have a grid of units. Every unit A-people voted for your candidate and B-people voted for another candidate.
-Your mission is to unite all of those units in X amount of districts so your candidate would have more districts voted for him.
-</p>
+<div class="for_info_only" style="text-align: center">
+    <img src="{{MEDIA}}title.png" style="max-height: 500px">
+</div>
+
+<p class="for_info_only"><i>Gerrymandering is a practice intended to establish a political advantage for a particular party or group by manipulating district boundaries. The resulting district is known as a gerrymander (/ˈdʒɛriˌmændər/); however, that word can also refer to the process. The term gerrymandering has negative connotations. Two principal tactics are used in gerrymandering: "cracking" (i.e. diluting the voting power of the opposing party's supporters across many districts) and "packing" (concentrating the opposing party's voting power in one district to reduce their voting power in other districts).</i></p>
+
+<p class="for_info_only"><i>In addition to its use achieving desired electoral results for a particular party, gerrymandering may be used to help or hinder a particular demographic, such as a political, ethnic, racial, linguistic, religious, or class group, such as in U.S. federal voting district boundaries that produce a majority of constituents representative of African-American or other racial minorities, known as "majority-minority districts". Gerrymandering can also be used to protect incumbents.
+</i></p>
+
+<p class="for_info_only"><i>Read more about it on <a href="https://en.wikipedia.org/wiki/Gerrymandering">wikipedia</a> or watch this episode <a href="https://www.youtube.com/watch?v=A-4dIImaodQ">Gerrymandering: Last Week Tonight with John Oliver (HBO)</a></i></p>
+
+<p>You have a map of units. Every unit has two elements (amount of people voted for candidate A and amount of people voted for candidate B). Your mission is to split a given area on X amount of districts in such a way so candidate A gets more districts voted for him than candidate B.</p>
+
+<p>There are two main rules of building districts. All districts should have same amount of people. All units should be connected inside of one district.</p>
 
 <p>
     <strong>Input: </strong> Two arguments. Amount of people for each district (as integer) , grid of all electoral zone (as list of list (each unit has [A-peoples, B-peoples]))
