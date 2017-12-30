@@ -161,3 +161,6 @@ fieldset[disabled] .btn {
 
 /* Your CSS */
 /*          */
+.animation-content .answer{
+    display: none !important;
+}
