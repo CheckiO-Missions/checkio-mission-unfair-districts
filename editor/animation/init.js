@@ -57,7 +57,7 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
                 }
             }
             
-            if (dataExpAnswer.length === 0 ||
+            if (!dataExpAnswer || dataExpAnswer.length === 0 ||
                 dataExpCheckResult === false) {
                 return 
             }
