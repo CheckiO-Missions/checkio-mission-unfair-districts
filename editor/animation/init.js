@@ -192,12 +192,14 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
                 python: 'unfair_districts'
             },
             animation: function($expl, data){
+                var answer = data.ext?data.ext.answer:null,
+                    result = data.ext?data.ext.result:null;
                 unfairDistrictsCanvas(
                     $expl[0],
                     data.in,
-                    data.ext.answer,
+                    answer,
                     data.out,
-                    data.ext.result
+                    result
                 );
             }
         });
