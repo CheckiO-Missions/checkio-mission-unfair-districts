@@ -3,7 +3,8 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
     function (extIO, $, TableComponent) {
 
         function unfairDistrictsCanvas(dom, dataInp, 
-            dataExpAnswer, user_result, dataExpCheckResult){
+            dataExpAnswer, user_result, dataExpCheckResult,
+            result_addon_01){
 
             const cellSize = 40,
                 grid = dataInp[1],
@@ -57,9 +58,8 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
                 }
             }
             
-            if (!dataExpAnswer || dataExpAnswer.length === 0 ||
-                dataExpCheckResult === false) {
-                return 
+            if (result_addon_01) {
+                return
             }
 
             function createLinePath(x1, y1, x2, y2) {
@@ -192,14 +192,16 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
                 python: 'unfair_districts'
             },
             animation: function($expl, data){
-                var answer = data.ext?data.ext.answer:null,
-                    result = data.ext?data.ext.result:null;
+                var answer = data.ext ? data.ext.answer : null,
+                    result = data.ext ? data.ext.result : null,
+                    result_addon_01 = data.ext.result_addon[1];
                 unfairDistrictsCanvas(
                     $expl[0],
                     data.in,
                     answer,
                     data.out,
-                    result
+                    result,
+                    result_addon_01
                 );
             }
         });
