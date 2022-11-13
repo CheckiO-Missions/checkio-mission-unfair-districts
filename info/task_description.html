@@ -7,28 +7,35 @@
 <p class="for_info_only"><i>In addition to its use achieving desired electoral results for a particular party, gerrymandering may be used to help or hinder a particular demographic, such as a political, ethnic, racial, linguistic, religious, or class group, such as in U.S. federal voting district boundaries that produce a majority of constituents representative of African-American or other racial minorities, known as "majority-minority districts". Gerrymandering can also be used to protect incumbents.
 </i></p>
 
-<p class="for_info_only"><i>Read more about it on <a href="https://en.wikipedia.org/wiki/Gerrymandering">wikipedia</a> or watch this episode <a href="https://www.youtube.com/watch?v=A-4dIImaodQ">Gerrymandering: Last Week Tonight with John Oliver (HBO)</a></i></p>
+<p class="for_info_only"><i>Read more about it on <a target="_blank" href="https://en.wikipedia.org/wiki/Gerrymandering">wikipedia</a> or watch this episode <a target="_blank" href="https://www.youtube.com/watch?v=A-4dIImaodQ">Gerrymandering: Last Week Tonight with John Oliver (HBO)</a></i></p>
 
-<p>You have a map of units. Every unit has two elements (amount of people voted for candidate A and amount of people voted for candidate B). Your mission is to split a given area on X amount of districts in such a way so candidate A gets more districts voted for him than candidate B.</p>
+<p>You have a map of units. Every unit has two elements (amount of people voted for candidate Yellow and amount of people voted for candidate Blue). Your mission is to split the given area on X amount of districts in such a way so candidate Yellow gets more districts voted for him than candidate Blue.</p>
 
-<p>There are two main rules of building districts. All districts should have same amount of people. All units should be connected inside of one district.</p>
-
+<p>There are two main rules of building districts:
+    <ul>
+        <li>all districts should have same amount of people;</li>
+        <li>all units should be connected inside of one district.</li>
+    </ul>
+</p>
 <p>
-    <strong>Input: </strong> Two arguments. Amount of people for each district (as integer) , grid of all electoral zone (as list of list (each unit has [A-peoples, B-peoples]))
+    The output is essentially labelling each unit with a letter, units with the same letter would become a post-gerrymander district. The population of the original units with the same label would be merged into the new post-gerrymander district. The goal of the gerrymandering is to make sure that if the election were to be held on these new districts, Yellow candidate would win.
+</p>
+<p>
+    <strong>Input:</strong> Two arguments. Amount of people for each district (as integer), grid of all electoral zone as list of lists of units (each unit is [Yellow-voters, Blue-voters])).
 </p>
 
 <p>
-    <strong>Output: </strong> united districts (as List of string). The same letters of string represents the same district. If candidate A can not win more, return empty list([]).
+    <strong>Output:</strong> A list of strings. The same letters of string represents units of the same district. If candidate Yellow can not win, return empty list <b class="code">[]</b>.
 </p>
 
 <div class="for_info_only">
     <p>
-        <strong>Example:</strong>
+        <strong>Examples:</strong>
     </p>
 <pre class="brush: python">
 unfair_districts(5, [[[2, 1], [1, 1], [1, 2]],
                      [[2, 1], [1, 1], [0, 2]]]) == ['AAC',
-                                                    'BBC]
+                                                    'BBC']
 
 
 unfair_districts(9, [[[0, 3], [3, 3], [1, 1]],
@@ -40,15 +47,17 @@ unfair_districts(9, [[[0, 3], [3, 3], [1, 1]],
 </pre>
 <p style="text-align: center;"><img src="{{MEDIA}}example.png" style="max-height: 193px"></p>
 <p>
-<strong>Precondition:</strong><br>
+    Here is the explanation of the first example. <b class="code">"A", "B", "C"</b> are districts names (you may use any: 'a', 'b', 'c'... or '1', '2', '3'... - the checker just regards the same letter as one district). We have 3 united districts, each of them has 2 units inside with following coordinates (row, column): <b class="code">"A"</b> = 0,0 and 0,1; <b class="code">"B"</b> = 1,0 and 1,1;  <b class="code">"C"</b> = 0,2 and 1,2. Every district has the same total amount of people - 5 and all units belonging to the same district are connected. Districts <b class="code">"A"</b> and <b class="code">"B"</b> are yellow, since there are more people in each district voted for Yellow candidate (3:2). The same is with district <b class="code">"C"</b> (more for Blue candidate - 1:4). So there are two districts for Yellow and one for Blue - this splitting variant is a valid solution. 
+</p>
+
+<p>
+<strong>Preconditions:</strong><br>
 </p>
 <ul>
-    <li> 2 &le; grid_rows, grid_columns &le; 6</li>
-    <li>4 &le; grid_rows * grid_columns &le; 25</li>
-    <li>Total_population % amuout_of_people == 0</li>
-    <ul>
-        <li>Total_population == sum(sum(unit) for unit in chain(*grid))</li>
-    </ul>
-    <li>0 &le; each_votes &le; 9</li>
+    <li> 2 &le; grid_rows, grid_columns &le; 6;</li>
+    <li>4 &le; grid_rows * grid_columns &le; 25;</li>
+    <li>Total_population % amount_of_people == 0;</li>
+    <li>Total_population == sum(sum(unit) for unit in chain(*grid));</li>
+    <li>0 &le; each_votes &le; 9.</li>
 </ul>
 </div>
